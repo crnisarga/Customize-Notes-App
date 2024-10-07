@@ -31,6 +31,9 @@ recyclerviewAnimators = "4.0.2"
 core = "4.6.2"
 extStrikethrough = "4.6.2"
 extTasklist = "4.6.2"
+kotlinPlugin = "1.8.10"
+navigationFragment = "2.7.7"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,7 +67,12 @@ core = { group = "io.noties.markwon", name = "core", version.ref = "core" }
 ext-strikethrough = { group = "io.noties.markwon", name = "ext-strikethrough", version.ref = "extStrikethrough" }
 ext-tasklist = { group = "io.noties.markwon", name = "ext-tasklist", version.ref = "extTasklist" }
 
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref ="navigationFragment" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinPlugin" }
+
+
 
