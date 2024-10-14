@@ -20,4 +20,13 @@
 <color name="color4" >#ffe0ac</color>
 <color name="color5" >#e5cfe5</color>
 
+
+    <array name="color_picker">
+       <item>@color/white</item>
+        <item>@color/teal_200</item>
+        <item>@color/black</item>
+        <item>@color/gray</item>
+        <item>@color/pink</item>
+        <item>@color/skyblue</item>
+    </array>
 </resources>

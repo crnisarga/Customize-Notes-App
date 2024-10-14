@@ -81,7 +81,8 @@
         android:clipToPadding="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:paddingBottom="5dp"
-        android:transitionGroup="true">
+        android:transitionGroup="true"
+        tools:listitem="@layout/note_item_layout">
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
