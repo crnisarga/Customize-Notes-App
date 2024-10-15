@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.ext.strikethrough)
     implementation(libs.ext.tasklist)
+    implementation(libs.markdownedittext)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
