@@ -1,11 +1,28 @@
 package com.example.notesapp.fragment
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.example.notesapp.R
+import com.example.notesapp.activities.MainActivity
+import com.example.notesapp.databinding.FragmentNoteBinding
+import com.example.notesapp.databinding.FragmentSaveOrDeleteBinding
+import com.example.notesapp.model.Note
+import com.example.notesapp.utils.hideKeyboard
+import com.example.notesapp.viewModel.NoteActivityViewModel
+import com.google.android.material.transition.MaterialContainerTransform
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import java.text.SimpleDateFormat
+import java.util.Date
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,44 +34,60 @@ private const val ARG_PARAM2 = "param2"
  * Use the [saveOrDeleteFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class saveOrDeleteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class saveOrDeleteFragment : Fragment(R.layout.fragment_save_or_delete) {
+
+    private lateinit var navController: NavController
+    private lateinit var contentBinding: FragmentSaveOrDeleteBinding
+    private var note: Note?= null
+    private var color = -1
+    private val noteActivityViewModel: NoteActivityViewModel by activityViewModels()
+    private var currentData = SimpleDateFormat.getInstance().format(Date())
+    private val job = CoroutineScope(Dispatchers.Main)
+    private val args: saveOrDeleteFragmentArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        val animation = MaterialContainerTransform().apply {
+            drawingViewId=R.id.fragment
+            scrimColor = Color.TRANSPARENT
+            duration = 300L
+        }
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        contentBinding = FragmentSaveOrDeleteBinding.bind(view)
+
+        navController = Navigation.findNavController(view)
+        val activity = activity as MainActivity
+
+        contentBinding.backBtn.setOnClickListener{
+            requireView().hideKeyboard()
+            navController.popBackStack()
+        }
+
+        contentBinding.saveNote.setOnClickListener{
+            saveNote()
+        }
+
+        try{
+            contentBinding.etNoteContent.setOnFocusChangeListener{_,hasFocus ->
+                if(hasFocus) {
+                    contentBinding.bootomBar.visibility = View.VISIBLE
+                    contentBinding.etNoteContent.setStylesBar(contentBinding.styleBar)
+                }
+                else contentBinding.bootomBar.visibility = View.GONE
+            }
+        }catch (e : Throwable) {
+            Log.d("tag",e.stackTrace.toString());
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_save_or_delete, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment saveOrDeleteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            saveOrDeleteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun saveNote() {
+        TODO("Not yet implemented")
     }
 }
