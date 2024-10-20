@@ -88,6 +88,6 @@ class saveOrDeleteFragment : Fragment(R.layout.fragment_save_or_delete) {
     }
 
     private fun saveNote() {
-        TODO("Not yet implemented the tested")
+        TODO("Not yet implemented the new accounttested")
     }
 }
